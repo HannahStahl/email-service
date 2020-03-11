@@ -1,11 +1,11 @@
 const aws = require('aws-sdk')
 const ses = new aws.SES()
 
-function generateResponse (code, payload, domain) {
+function generateResponse (code, payload, siteDomain) {
   return {
     statusCode: code,
     headers: {
-      'Access-Control-Allow-Origin': domain,
+      'Access-Control-Allow-Origin': siteDomain,
       'Access-Control-Allow-Headers': 'x-requested-with',
       'Access-Control-Allow-Credentials': true
     },
@@ -13,11 +13,11 @@ function generateResponse (code, payload, domain) {
   }
 }
 
-function generateError (code, err, domain) {
+function generateError (code, err, siteDomain) {
   return {
     statusCode: code,
     headers: {
-      'Access-Control-Allow-Origin': domain,
+      'Access-Control-Allow-Origin': siteDomain,
       'Access-Control-Allow-Headers': 'x-requested-with',
       'Access-Control-Allow-Credentials': true
     },
@@ -26,9 +26,9 @@ function generateError (code, err, domain) {
 }
 
 function generateEmailParams (body) {
-  const { email, name, message, sourceEmail, domain } = JSON.parse(body)
-  if (!(email && name)) {
-    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\', \'sourceEmail\', and \'domain\'.');
+  const { email, name, message, sourceEmail, siteDomain } = JSON.parse(body)
+  if (!(email && name && message && sourceEmail && siteDomain)) {
+    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\', \'sourceEmail\', and \'siteDomain\'.');
   }
   return {
     Source: sourceEmail,
@@ -58,7 +58,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `New message from ${domain.split('www')[1]}`,
+        Data: `New message from ${siteDomain.split('//')[1]}`,
       }
     }
   }
@@ -68,8 +68,8 @@ module.exports.send = async (event) => {
   try {
     const emailParams = generateEmailParams(event.body)
     const data = await ses.sendEmail(emailParams).promise()
-    return generateResponse(200, data, event.body.domain)
+    return generateResponse(200, data, event.body.siteDomain)
   } catch (err) {
-    return generateError(500, err, event.body.domain)
+    return generateError(500, err, event.body.siteDomain)
   }
 }
