@@ -1,0 +1,24 @@
+service: email
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ses:SendEmail"
+      Resource: "*"
+
+functions:
+  send:
+    handler: handler.send
+    events:
+      - http:
+          path: email/send
+          method: post
+          cors: true
