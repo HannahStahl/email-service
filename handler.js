@@ -49,7 +49,7 @@ function generateEmailParams (body) {
                 </head>
                 <body>
                   <h2><b>${name}</b> has sent you the following message:</h2><p>"${message}"</p>
-                  <p><i>You can respond to this message by replying directly to this email.</i></p>
+                  <p><i>You can respond to ${name} by replying directly to this email.</i></p>
                 </body>
               </html>
             `
@@ -68,7 +68,7 @@ module.exports.send = async (event) => {
   try {
     const emailParams = generateEmailParams(event.body)
     const data = await ses.sendEmail(emailParams).promise()
-    return generateResponse(200, data, event.body)
+    return generateResponse(200, data, event.body.domain)
   } catch (err) {
     return generateError(500, err, event.body.domain)
   }
