@@ -24,7 +24,7 @@ function generateError (code, err) {
 }
 
 function generateEmailParams (body) {
-  const { email, name, message, sourceEmail } = body
+  const { email, name, message, sourceEmail, siteDomain } = body
   if (!(email && name && message && sourceEmail)) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\', and \'sourceEmail\'.');
   }
@@ -56,7 +56,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `New message from website`,
+        Data: `New message from ${siteDomain || 'website'}`,
       }
     }
   }
