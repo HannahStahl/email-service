@@ -25,8 +25,8 @@ function generateError (code, err) {
 
 function generateEmailParams (body) {
   const { email, name, message, sourceEmail, siteDomain, html, orderNotification } = body
-  if (!(email && name && message && sourceEmail)) {
-    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\', and \'sourceEmail\'.');
+  if (!(email && name && (message || html) && sourceEmail)) {
+    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'html\', and \'sourceEmail\'.');
   }
   return {
     Source: sourceEmail,
