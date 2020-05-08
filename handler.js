@@ -64,13 +64,13 @@ function getMessageNotification (body) {
 }
 
 function getOrderNotification (body) {
-  const { name, items, orderTotal } = body
+  const { name, items, orderTotal, siteDomain } = body
   let itemsTable = '';
   items.forEach((item) => {
     itemsTable += `
       <tr>
-        <td><a href=${item.link}>${item.name}</a></td>
-        <td>${item.price}</td>
+        <td><a href=${siteDomain}/${item.link}>${item.name}</a></td>
+        <td>$${item.price}</td>
         <td>${item.quantity}</td>
       </tr>
     `
@@ -110,7 +110,7 @@ function getOrderNotification (body) {
           </tr></thead>
           <tbody>${itemsTable}</tbody>
         </table>
-        <p><b>Total:</b> ${orderTotal}</p>
+        <p><b>Total:</b> $${orderTotal}</p>
         <p class="note"><i>To get in touch with ${name}, simply reply to this email.</i></p>
       </body>
     </html>
