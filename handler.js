@@ -24,7 +24,7 @@ function generateError (code, err) {
 }
 
 function generateEmailParams (body) {
-  const { email, name, message, sourceEmail, siteDomain } = body
+  const { email, name, message, sourceEmail, siteDomain, html, orderNotification } = body
   if (!(email && name && message && sourceEmail)) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\', and \'sourceEmail\'.');
   }
@@ -36,11 +36,13 @@ function generateEmailParams (body) {
       Body: {
         Html: {
           Charset: 'UTF-8',
-          Data: (
+          Data: html || (
             `
               <html>
                 <head>
+                  <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
                   <style>
+                    body { 'Rubik', sans-serif; }
                     h2 { font-weight: normal; }
                     p { font-size: 16px; }
                   </style>
@@ -56,7 +58,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `New message from ${siteDomain || 'website'}`,
+        Data: `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
       }
     }
   }
