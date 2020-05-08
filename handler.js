@@ -42,7 +42,7 @@ function generateEmailParams (body) {
                 <head>
                   <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
                   <style>
-                    body { 'Rubik', sans-serif; }
+                    body { font-family: 'Rubik', sans-serif; }
                     h2 { font-weight: normal; }
                     p { font-size: 16px; }
                   </style>
