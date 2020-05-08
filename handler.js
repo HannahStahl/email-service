@@ -135,8 +135,8 @@ function getDefaultHtml (body) {
 
 function generateEmailParams (body) {
   const { email, name, message, items, sourceEmail, siteDomain, html, orderNotification } = body
-  if (!(email && name && (message || items) && sourceEmail)) {
-    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'html\', and \'sourceEmail\'.');
+  if (!(email && name && (message || items || html) && sourceEmail)) {
+    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'items\' or \'html\', and \'sourceEmail\'.');
   }
   return {
     Source: sourceEmail,
