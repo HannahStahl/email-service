@@ -127,8 +127,77 @@ function getOrderNotification (body) {
   `
 }
 
+function getOrderConfirmation (body) {
+  const { name, items, orderTotal, siteDomain, address, businessName } = body
+  let itemsTable = ''
+  items.forEach((item) => {
+    itemsTable += `
+      <tr>
+        <td><a href=${siteDomain}${item.link}>${item.name}</a></td>
+        <td>$${item.price}</td>
+        <td>${item.quantity}</td>
+      </tr>
+    `
+  })
+  let addressHtml = ''
+  address.forEach((line) => {
+    addressHtml += `<p class="address">${line}</p>`
+  })
+  return `
+    <html>
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+        <style>
+          * {
+            font-family: 'Rubik', sans-serif;
+          }
+          td {
+            border: none;
+          }
+          h2 {
+            font-weight: normal;
+            letter-spacing: 1.6px;
+          }
+          p {
+            font-size: 16px;
+            letter-spacing: 1.1px;
+          }
+          .items-table td {
+            padding: 20px;
+            border: solid 1px rgb(206, 212, 218);
+          }
+          .note {
+            font-size: 14px;
+          }
+          .address {
+            margin: 0px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Thank you ${name} for your order from ${businessName || siteDomain}!</h2>
+        <hr />
+        <table class="items-table">
+          <thead><tr>
+            <td><b>Item</b></td>
+            <td><b>Price</b></td>
+            <td><b>Quantity</b></td>
+          </tr></thead>
+          <tbody>${itemsTable}</tbody>
+        </table>
+        <p><b>Total:</b> $${orderTotal}</p>
+        <p class="address"><b>Shipping Address:</b></p>
+        <p class="address">${name}</p>
+        ${addressHtml}
+        <p class="note"><i>For questions about your order, you may reply directly to this email.</i></p>
+      </body>
+    </html>
+  `
+}
+
 function getDefaultHtml (body) {
-  const { orderNotification } = body
+  const { orderNotification, isCustomer } = body
+  if (isCustomer) return getOrderConfirmation(body)
   if (orderNotification) return getOrderNotification(body)
   return getMessageNotification(body)
 }
