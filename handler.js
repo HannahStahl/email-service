@@ -151,15 +151,21 @@ function getOrderConfirmation (body) {
           * {
             font-family: 'Rubik', sans-serif;
           }
-          td {
-            border: none;
-          }
           p {
             font-size: 16px;
             letter-spacing: 1.1px;
           }
+          .items-table {
+            border: solid 1px rgb(206, 212, 218);
+          }
           .items-table td {
+            border: none;
             padding: 20px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+          }
+          .items-table thead td {
+            border-bottom: solid 1px rgb(206, 212, 218);
           }
           .address {
             margin: 0px;
@@ -210,7 +216,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
+        Data: orderConfirmation ? `${businessName} Order Confirmation` : `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
       }
     }
   }
