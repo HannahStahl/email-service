@@ -139,7 +139,7 @@ function generateEmailParams (body) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'items\' or \'html\', and \'sourceEmail\'.');
   }
   return {
-    Source: sourceEmail,
+    Source: 'hannahstahl14@gmail.com',
     Destination: { ToAddresses: [sourceEmail] },
     ReplyToAddresses: [email],
     Message: {
