@@ -23,9 +23,109 @@ function generateError (code, err) {
   }
 }
 
+function getMessageNotification (body) {
+  const { name, message } = body
+  return `
+    <html>
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+        <style>
+          * {
+            font-family: 'Rubik', sans-serif;
+          }
+          h2 {
+            font-weight: normal;
+            letter-spacing: 1.6px;
+          }
+          p {
+            font-size: 16px;
+            letter-spacing: 1.1px;
+          }
+          .message-box {
+            max-width: 500px;
+            padding: 20px;
+            border: solid 1px rgb(206, 212, 218);
+          }
+          .message-box p {
+            margin: 0px;
+          }
+          .note {
+            font-size: 14px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2><b>${name}</b> has sent you the following message:</h2>
+        <div class="message-box"><p>${message}</p></div>
+        <p class="note"><i>You can respond to ${name} by replying directly to this email.</i></p>
+      </body>
+    </html>
+  `
+}
+
+function getOrderNotification (body) {
+  const { name, items, orderTotal } = body
+  let itemsTable = '';
+  items.forEach((item) => {
+    itemsTable += `
+      <tr>
+        <td><a href=${item.link}>${item.name}</a></td>
+        <td>${item.price}</td>
+        <td>${item.quantity}</td>
+      </tr>
+    `
+  })
+  return `
+    <html>
+      <head>
+        <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
+        <style>
+          * {
+            font-family: 'Rubik', sans-serif;
+          }
+          h2 {
+            font-weight: normal;
+            letter-spacing: 1.6px;
+          }
+          p {
+            font-size: 16px;
+            letter-spacing: 1.1px;
+          }
+          .items-table td {
+            padding: 20px;
+            border: solid 1px rgb(206, 212, 218);
+          }
+          .note {
+            font-size: 14px;
+          }
+        </style>
+      </head>
+      <body>
+        <h2>You have a new order from <b>${name}</b>!</h2>
+        <table class="items-table">
+          <thead><tr>
+            <td><b>Item</b></td>
+            <td><b>Price</b></td>
+            <td><b>Quantity</b></td>
+          </tr></thead>
+          <tbody>${itemsTable}</tbody>
+        </table>
+        <p><b>Total:</b> ${orderTotal}</p>
+        <p class="note"><i>To get in touch with ${name}, simply reply to this email.</i></p>
+      </body>
+    </html>
+  `
+}
+
+function getDefaultHtml (body) {
+  const { orderNotification } = body
+  if (orderNotification) return getOrderNotification(body)
+  return getMessageNotification(body)
+}
+
 function generateEmailParams (body) {
-  const { email, name, message, sourceEmail, siteDomain, html, orderNotification } = body
-  if (!(email && name && (message || html) && sourceEmail)) {
+  const { email, name, message, items, sourceEmail, siteDomain, html, orderNotification } = body
+  if (!(email && name && (message || items) && sourceEmail)) {
     throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'html\', and \'sourceEmail\'.');
   }
   return {
@@ -36,41 +136,7 @@ function generateEmailParams (body) {
       Body: {
         Html: {
           Charset: 'UTF-8',
-          Data: html || (
-            `
-              <html>
-                <head>
-                  <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
-                  <style>
-                    h2 {
-                      font-family: 'Rubik', sans-serif;
-                      font-weight: normal;
-                      letter-spacing: 1.6px;
-                    }
-                    p {
-                      font-family: 'Rubik', sans-serif;
-                      font-size: 14px;
-                      letter-spacing: 1.1px;
-                    }
-                    .message-box {
-                      max-width: 500px;
-                      padding: 20px;
-                      border: solid 1px rgb(206, 212, 218);
-                    }
-                    .message-box p {
-                      margin: 0px;
-                      font-size: 16px;
-                    }
-                  </style>
-                </head>
-                <body>
-                  <h2><b>${name}</b> has sent you the following message:</h2>
-                  <div class="message-box"><p>${message}</p></div>
-                  <p><i>You can respond to ${name} by replying directly to this email.</i></p>
-                </body>
-              </html>
-            `
-          ),
+          Data: html || getDefaultHtml(body),
         }
       },
       Subject: {
