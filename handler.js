@@ -42,13 +42,26 @@ function generateEmailParams (body) {
                 <head>
                   <link href="https://fonts.googleapis.com/css?family=Rubik&display=swap" rel="stylesheet" />
                   <style>
-                    body { font-family: 'Rubik', sans-serif; }
-                    h2 { font-weight: normal; }
-                    p { font-size: 16px; }
+                    body {
+                      font-family: 'Rubik', sans-serif;
+                      letter-spacing: 1.5px;
+                    }
+                    h2 {
+                      font-weight: normal;
+                    }
+                    p {
+                      font-size: 16px;
+                    }
+                    .message-box {
+                      padding: 20px;
+                      border: solid 1px rgb(206, 212, 218);
+                    }
                   </style>
                 </head>
                 <body>
-                  <h2><b>${name}</b> has sent you the following message:</h2><p>"${message}"</p>
+                  <div class="message-box">
+                    <h2><b>${name}</b> has sent you the following message:</h2><p>"${message}"</p>
+                  </div>
                   <p><i>You can respond to ${name} by replying directly to this email.</i></p>
                 </body>
               </html>
