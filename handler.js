@@ -133,9 +133,9 @@ function getOrderConfirmation (body) {
   items.forEach((item) => {
     itemsTable += `
       <tr>
-        <td><a href=${siteDomain}${item.link}>${item.name}</a></td>
-        <td>$${item.price}</td>
-        <td>${item.quantity}</td>
+        <td><p><a href=${siteDomain}${item.link}>${item.name}</a></p></td>
+        <td><p>$${item.price}</p></td>
+        <td><p>${item.quantity}</p></td>
       </tr>
     `
   })
@@ -154,20 +154,12 @@ function getOrderConfirmation (body) {
           td {
             border: none;
           }
-          h2 {
-            font-weight: normal;
-            letter-spacing: 1.6px;
-          }
           p {
             font-size: 16px;
             letter-spacing: 1.1px;
           }
           .items-table td {
             padding: 20px;
-            border: solid 1px rgb(206, 212, 218);
-          }
-          .note {
-            font-size: 14px;
           }
           .address {
             margin: 0px;
@@ -175,13 +167,14 @@ function getOrderConfirmation (body) {
         </style>
       </head>
       <body>
-        <h2>Thank you ${name} for your order from ${businessName || siteDomain}!</h2>
-        <hr />
+        <p>Hello ${name},</p>
+        <p>Thank you for your order from ${businessName || siteDomain}!</p>
+        <p>Here are your order details:</p>
         <table class="items-table">
           <thead><tr>
-            <td><b>Item</b></td>
-            <td><b>Price</b></td>
-            <td><b>Quantity</b></td>
+            <td><p><b>Item</b></p></td>
+            <td><p><b>Price</b></p></td>
+            <td><p><b>Quantity</b></p></td>
           </tr></thead>
           <tbody>${itemsTable}</tbody>
         </table>
@@ -189,7 +182,7 @@ function getOrderConfirmation (body) {
         <p class="address"><b>Shipping Address:</b></p>
         <p class="address">${name}</p>
         ${addressHtml}
-        <p class="note"><i>For questions about your order, you may reply directly to this email.</i></p>
+        <p>Thank you for supporting our business. If you have any questions about your order, please reply directly to this email to get in touch.</p>
       </body>
     </html>
   `
