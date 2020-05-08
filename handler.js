@@ -69,7 +69,7 @@ function getOrderNotification (body) {
   items.forEach((item) => {
     itemsTable += `
       <tr>
-        <td><a href=${siteDomain}/${item.link}>${item.name}</a></td>
+        <td><a href=${siteDomain}${item.link}>${item.name}</a></td>
         <td>$${item.price}</td>
         <td>${item.quantity}</td>
       </tr>
