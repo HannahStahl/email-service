@@ -45,6 +45,7 @@ function generateEmailParams (body) {
                     body {
                       font-family: 'Rubik', sans-serif;
                       letter-spacing: 1.5px;
+                      max-width: 500px;
                     }
                     h2 {
                       font-weight: normal;
@@ -59,9 +60,8 @@ function generateEmailParams (body) {
                   </style>
                 </head>
                 <body>
-                  <div class="message-box">
-                    <h2><b>${name}</b> has sent you the following message:</h2><p>"${message}"</p>
-                  </div>
+                  <h2><b>${name}</b> has sent you the following message:</h2>
+                  <div class="message-box"><p>${message}</p></div>
                   <p><i>You can respond to ${name} by replying directly to this email.</i></p>
                 </body>
               </html>
