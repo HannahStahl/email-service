@@ -44,7 +44,7 @@ function generateEmailParams (body) {
                   <style>
                     body {
                       font-family: 'Rubik', sans-serif;
-                      letter-spacing: 1.5px;
+                      letter-spacing: 2px;
                       max-width: 500px;
                     }
                     h2 {
@@ -52,6 +52,7 @@ function generateEmailParams (body) {
                     }
                     p {
                       font-size: 16px;
+                      letter-spacing: 1.5px;
                     }
                     .message-box {
                       padding: 20px;
