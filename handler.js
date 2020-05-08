@@ -134,14 +134,11 @@ function getDefaultHtml (body) {
 }
 
 function generateEmailParams (body) {
-  const { email, name, message, items, sourceEmail, siteDomain, html, orderNotification } = body
-  if (!(email && name && (message || items || html) && sourceEmail)) {
-    throw new Error('Missing parameters! Make sure to add parameters \'email\', \'name\', \'message\' or \'items\' or \'html\', and \'sourceEmail\'.');
-  }
+  const { userEmail, clientEmail, siteDomain, html, orderNotification, email, sourceEmail } = body
   return {
     Source: 'hannahstahl14@gmail.com',
-    Destination: { ToAddresses: [sourceEmail] },
-    ReplyToAddresses: [email],
+    Destination: { ToAddresses: [clientEmail ? clientEmail : sourceEmail] },
+    ReplyToAddresses: [userEmail ? userEmail : email],
     Message: {
       Body: {
         Html: {
