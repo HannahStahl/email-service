@@ -196,18 +196,18 @@ function getOrderConfirmation (body) {
 }
 
 function getDefaultHtml (body) {
-  const { orderNotification, isCustomer } = body
-  if (isCustomer) return getOrderConfirmation(body)
+  const { orderConfirmation, orderNotification } = body
+  if (orderConfirmation) return getOrderConfirmation(body)
   if (orderNotification) return getOrderNotification(body)
   return getMessageNotification(body)
 }
 
 function generateEmailParams (body) {
-  const { userEmail, clientEmail, siteDomain, html, orderNotification } = body
+  const { userEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation } = body
   return {
     Source: 'hannahstahl14@gmail.com',
-    Destination: { ToAddresses: [clientEmail] },
-    ReplyToAddresses: [userEmail],
+    Destination: { ToAddresses: [orderConfirmation ? userEmail : clientEmail] },
+    ReplyToAddresses: [orderConfirmation ? clientEmail : userEmail],
     Message: {
       Body: {
         Html: {
