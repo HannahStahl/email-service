@@ -202,7 +202,7 @@ function getDefaultHtml (body) {
 }
 
 function generateEmailParams (body) {
-  const { userEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation } = body
+  const { userEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation, businessName } = body
   return {
     Source: 'hannahstahl14@gmail.com',
     Destination: { ToAddresses: [orderConfirmation ? userEmail : clientEmail] },
@@ -216,7 +216,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: orderConfirmation ? `${businessName} Order Confirmation` : `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
+        Data: orderConfirmation ? `${businessName || siteDomain} Order Confirmation` : `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
       }
     }
   }
