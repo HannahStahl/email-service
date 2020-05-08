@@ -77,7 +77,7 @@ function getOrderNotification (body) {
   })
   let addressHtml = ''
   address.forEach((line) => {
-    addressHtml += `<p>${line}</p>`
+    addressHtml += `<p class="address">${line}</p>`
   })
   return `
     <html>
@@ -102,6 +102,9 @@ function getOrderNotification (body) {
           .note {
             font-size: 14px;
           }
+          .address {
+            margin: 0px;
+          }
         </style>
       </head>
       <body>
@@ -115,7 +118,8 @@ function getOrderNotification (body) {
           <tbody>${itemsTable}</tbody>
         </table>
         <p><b>Total:</b> $${orderTotal}</p>
-        <p><b>Shipping Address:</b></p>
+        <p class="address"><b>Shipping Address:</b></p>
+        <p class="address">${name}</p>
         ${addressHtml}
         <p class="note"><i>To get in touch with ${name}, simply reply to this email.</i></p>
       </body>
