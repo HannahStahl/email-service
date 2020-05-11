@@ -69,9 +69,9 @@ function getOrderNotification (body) {
   items.forEach((item) => {
     itemsTable += `
       <tr>
-        <td><a href=${siteDomain}${item.link}>${item.name}</a></td>
-        <td>$${item.price}</td>
-        <td>${item.quantity}</td>
+        <td><a href=${siteDomain}${item.link}><p>${item.name}</p></a></td>
+        <td><p>$${item.price}</p></td>
+        <td><p>${item.quantity}</p></td>
       </tr>
     `
   })
@@ -95,9 +95,17 @@ function getOrderNotification (body) {
             font-size: 16px;
             letter-spacing: 1.1px;
           }
+          .items-table {
+            margin-bottom: 25px;
+            border-spacing: 0px;
+            border: solid 1px rgb(206, 212, 218);
+          }
           .items-table td {
             padding: 20px;
             border: solid 1px rgb(206, 212, 218);
+          }
+          .items-table td p {
+            margin: 0px;
           }
           .note {
             font-size: 14px;
@@ -111,9 +119,9 @@ function getOrderNotification (body) {
         <h2>You have a new order from <b>${name}</b>!</h2>
         <table class="items-table">
           <thead><tr>
-            <td><b>Item</b></td>
-            <td><b>Price</b></td>
-            <td><b>Quantity</b></td>
+            <td><p><b>Item</b></p></td>
+            <td><p><b>Price</b></p></td>
+            <td><p><b>Quantity</b></p></td>
           </tr></thead>
           <tbody>${itemsTable}</tbody>
         </table>
@@ -156,16 +164,16 @@ function getOrderConfirmation (body) {
             letter-spacing: 1.1px;
           }
           .items-table {
+            border-spacing: 0px;
             border: solid 1px rgb(206, 212, 218);
+            margin-bottom: 25px;
           }
           .items-table td {
-            border: none;
+            border: solid 1px rgb(206, 212, 218);
             padding: 20px;
-            padding-top: 0px;
-            padding-bottom: 0px;
           }
-          .items-table thead td {
-            border-bottom: solid 1px rgb(206, 212, 218);
+          .items-table td p {
+            margin: 0px;
           }
           .address {
             margin: 0px;
@@ -216,7 +224,7 @@ function generateEmailParams (body) {
       },
       Subject: {
         Charset: 'UTF-8',
-        Data: orderConfirmation ? `${businessName || siteDomain} Order Confirmation` : `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
+        Data: orderConfirmation ? `${businessName || siteDomain} - Order Confirmation` : `New ${orderNotification ? 'order' : 'message'} from ${siteDomain || 'website'}`,
       }
     }
   }
