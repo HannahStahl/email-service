@@ -183,7 +183,7 @@ function getOrderConfirmation (body) {
       <body>
         <p>Hello ${name},</p>
         <p>Thank you for your order from ${businessName || siteDomain}!</p>
-        <p>Here are your order details:</p>
+        <p><b>Order Details:</b></p>
         <table class="items-table">
           <thead><tr>
             <td><p><b>Item</b></p></td>
