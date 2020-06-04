@@ -110,6 +110,9 @@ function getOrderNotification (body) {
           .note {
             font-size: 14px;
           }
+          .total {
+            margin-bottom: 0px;
+          }
           .address {
             margin: 0px;
           }
@@ -125,7 +128,8 @@ function getOrderNotification (body) {
           </tr></thead>
           <tbody>${itemsTable}</tbody>
         </table>
-        <p><b>Total:</b> $${orderTotal}</p>
+        <p class="total"><b>Total:</b> $${orderTotal}</p>
+        <p>Funds should arrive in your bank account within 2 business days.</p>
         <p class="address"><b>Shipping Address:</b></p>
         <p class="address">${name}</p>
         ${addressHtml}
@@ -212,7 +216,7 @@ function getDefaultHtml (body) {
 function generateEmailParams (body) {
   const { userEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation, businessName } = body
   return {
-    Source: 'hannahstahl14@gmail.com',
+    Source: orderConfirmation ? clientEmail : 'hannahstahl14@gmail.com',
     Destination: { ToAddresses: [orderConfirmation ? userEmail : clientEmail] },
     ReplyToAddresses: [orderConfirmation ? clientEmail : userEmail],
     Message: {
