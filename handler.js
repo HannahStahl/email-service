@@ -113,6 +113,9 @@ function getOrderNotification (body) {
           .total {
             margin-bottom: 0px;
           }
+          .payment-note {
+            margin-top: 0px;
+          }
           .address {
             margin: 0px;
           }
@@ -129,7 +132,7 @@ function getOrderNotification (body) {
           <tbody>${itemsTable}</tbody>
         </table>
         <p class="total"><b>Total:</b> $${orderTotal}</p>
-        <p>Funds should arrive in your bank account within 2 business days.</p>
+        <p class="payment-note">Funds should arrive in your bank account within 2 business days.</p>
         <p class="address"><b>Shipping Address:</b></p>
         <p class="address">${name}</p>
         ${addressHtml}
