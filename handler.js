@@ -217,9 +217,10 @@ function getDefaultHtml (body) {
 }
 
 function generateEmailParams (body) {
-  const { userEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation, businessName } = body
+  const { userEmail, websiteEmail, clientEmail, siteDomain, html, orderNotification, orderConfirmation, businessName } = body
+  const sourceEmail = websiteEmail || 'hannahstahl14@gmail.com'
   return {
-    Source: orderConfirmation ? clientEmail : 'hannahstahl14@gmail.com',
+    Source: orderConfirmation ? clientEmail : sourceEmail,
     Destination: { ToAddresses: [orderConfirmation ? userEmail : clientEmail] },
     ReplyToAddresses: [orderConfirmation ? clientEmail : userEmail],
     Message: {
