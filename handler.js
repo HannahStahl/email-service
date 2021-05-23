@@ -48,6 +48,7 @@ function getMessageNotification (body) {
           }
           .message-box p {
             margin: 0px;
+            white-space: pre-wrap;
           }
           .note {
             font-size: 14px;
